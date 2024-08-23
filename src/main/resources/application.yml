@@ -1,0 +1,18 @@
+# server
+server:
+  port: '8088'
+
+# spring
+spring:
+  application:
+    name: 'Support-svc'
+
+# meowu
+meowu:
+  web:
+    cors: 'true'
+    converter: 'gson'
+
+# logging
+logging:
+  config: 'classpath:logback-spring.xml'
