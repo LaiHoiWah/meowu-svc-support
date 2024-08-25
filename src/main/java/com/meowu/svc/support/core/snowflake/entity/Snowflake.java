@@ -1,7 +1,6 @@
-package com.meowu.svc.support.core.dictionary.entity;
+package com.meowu.svc.support.core.snowflake.entity;
 
 import com.meowu.starter.commons.domain.Create;
-import com.meowu.starter.commons.domain.Delete;
 import com.meowu.starter.commons.domain.Identity;
 import com.meowu.starter.commons.domain.Update;
 import lombok.Getter;
@@ -11,13 +10,15 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class Group implements Identity<Long>, Create, Update, Delete{
+public class Snowflake implements Identity<Long>, Create, Update{
 
     private Long id;
-    private String name;
-    private String description;
-    private Boolean delete;
+    private Integer centerId;
+    private Integer workerId;
+    private Long lastTimestamp;
+    private String application;
+    private String ip;
+    private String port;
     private Date createTime;
     private Date updateTime;
-    private Date deleteTime;
 }
