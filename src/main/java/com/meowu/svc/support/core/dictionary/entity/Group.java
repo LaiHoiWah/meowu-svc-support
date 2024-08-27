@@ -14,7 +14,7 @@ import java.util.Date;
 public class Group implements Identity<Long>, Create, Update, Delete{
 
     private Long id;
-    private String name;
+    private String code;
     private String description;
     private Boolean delete;
     private Date createTime;
