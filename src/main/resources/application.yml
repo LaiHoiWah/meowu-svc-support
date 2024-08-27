@@ -7,6 +7,11 @@ spring:
   application:
     name: 'Support-svc'
 
+# mybatis
+mybatis:
+  configuration:
+    mp-underscore-to-camel-case: true
+
 # meowu
 meowu:
   web:
