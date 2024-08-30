@@ -11,12 +11,15 @@ import java.util.List;
 public interface GroupMapper{
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    @Insert("insert into st_group(name, description, create_time) values(#{name}, #{description}, #{createTime})")
-    Group save(Group group);
+    @Insert("insert into st_group(code, description, create_time) values(#{code}, #{description}, #{createTime})")
+    void save(Group group);
 
-    @SelectProvider(value = MySqlProvider.class, method = "find")
-    Group get(@Param("criteria") Criteria criteria);
+    @SelectProvider(type = MySqlProvider.class, method = "find")
+    Group get(Criteria criteria);
 
-    @SelectProvider(value = MySqlProvider.class, method = "find")
-    List<Group> find(@Param("criteria") Criteria criteria);
+    @SelectProvider(type = MySqlProvider.class, method = "find")
+    List<Group> find(Criteria criteria);
+
+    @SelectProvider(type = MySqlProvider.class, method = "find")
+    Long count(Criteria criteria);
 }

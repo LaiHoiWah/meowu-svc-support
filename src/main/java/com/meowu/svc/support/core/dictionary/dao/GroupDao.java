@@ -3,7 +3,6 @@ package com.meowu.svc.support.core.dictionary.dao;
 import com.meowu.starter.commons.utils.AssertionUtils;
 import com.meowu.starter.mybatis.criteria.Criteria;
 import com.meowu.starter.mybatis.criteria.Restrictions;
-import com.meowu.starter.mybatis.utils.FieldUtils;
 import com.meowu.svc.support.core.dictionary.dao.mapper.GroupMapper;
 import com.meowu.svc.support.core.dictionary.entity.Group;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +21,29 @@ public class GroupDao{
 
         // set create time
         group.setCreateTime(new Date());
-        return groupMapper.save(group);
+        groupMapper.save(group);
+        return group;
     }
 
     public Group getById(Long id){
         AssertionUtils.notNull(id, "Group id must not be null");
 
         // condition
-        Criteria criteria = new Criteria();
-        criteria.where(Restrictions.equal(FieldUtils.getFieldName(Group::getId), id));
+        Criteria criteria = new Criteria(Group.class);
+        criteria.where(Restrictions.equal(Group::getId, id));
         return groupMapper.get(criteria);
+    }
+
+    public boolean existsByCode(String code){
+        AssertionUtils.notBlank(code, "Group code must not be null");
+
+        // condition
+        Criteria criteria = new Criteria(Group.class);
+        criteria.selects(Restrictions.count());
+        criteria.where(Restrictions.equal("code", code));
+
+        // result
+        Long total = groupMapper.count(criteria);
+        return (total != null && total > 0);
     }
 }

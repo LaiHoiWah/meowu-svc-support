@@ -41,10 +41,16 @@
             <artifactId>logback-classic</artifactId>
         </dependency>
 
-        <!-- javax servlet -->
+        <!-- javax -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
+        <!-- java connect -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
 
         <!-- lombok -->
