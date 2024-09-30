@@ -2,13 +2,14 @@ package com.meowu.svc.support.core.dictionary.dao;
 
 import com.meowu.starter.commons.utils.AssertionUtils;
 import com.meowu.starter.mybatis.criteria.Criteria;
-import com.meowu.starter.mybatis.criteria.Restrictions;
+import com.meowu.starter.mybatis.mysql.restrictions.Restrictions;
 import com.meowu.svc.support.core.dictionary.dao.mapper.GroupMapper;
 import com.meowu.svc.support.core.dictionary.entity.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class GroupDao{
@@ -29,21 +30,29 @@ public class GroupDao{
         AssertionUtils.notNull(id, "Group id must not be null");
 
         // condition
-        Criteria criteria = new Criteria(Group.class);
-        criteria.where(Restrictions.equal(Group::getId, id));
+        Criteria criteria = new Criteria();
+        criteria.from(Group.class);
+        criteria.where(Restrictions.equal("id", id));
         return groupMapper.get(criteria);
+    }
+
+    public List<Group> find(){
+        Criteria criteria = new Criteria();
+        criteria.from(Group.class);
+        return groupMapper.find(criteria);
     }
 
     public boolean existsByCode(String code){
         AssertionUtils.notBlank(code, "Group code must not be null");
 
         // condition
-        Criteria criteria = new Criteria(Group.class);
-        criteria.selects(Restrictions.count());
-        criteria.where(Restrictions.equal("code", code));
+        Criteria criteria = new Criteria();
+//        criteria.selects(Restrictions.count());
+//        criteria.where(Restrictions.equal("code", code));
 
         // result
-        Long total = groupMapper.count(criteria);
+//        Long total = groupMapper.count(criteria);
+        Long total = 0L;
         return (total != null && total > 0);
     }
 }

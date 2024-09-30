@@ -6,6 +6,8 @@ import com.meowu.svc.support.core.dictionary.dao.GroupDao;
 import com.meowu.svc.support.core.dictionary.entity.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Manager
 public class GroupManager{
 
@@ -22,5 +24,15 @@ public class GroupManager{
         }
 
         return groupDao.save(group);
+    }
+
+    public Group getById(Long id){
+        AssertionUtils.notNull(id, "Group id must not be null");
+
+        return groupDao.getById(id);
+    }
+
+    public List<Group> find(){
+        return groupDao.find();
     }
 }

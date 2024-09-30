@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional(readOnly = true)
 @Service
 public class GroupServiceImpl implements GroupService{
@@ -18,5 +20,15 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public Group save(Group group){
         return groupManager.save(group);
+    }
+
+    @Override
+    public Group getById(Long id){
+        return groupManager.getById(id);
+    }
+
+    @Override
+    public List<Group> find(){
+        return groupManager.find();
     }
 }
