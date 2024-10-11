@@ -19,6 +19,7 @@ public class GroupDao{
 
     public Group save(Group group){
         AssertionUtils.notNull(group, "Group entity must not be null");
+        AssertionUtils.notBlank(group.getCode(), "Group code must not be null");
 
         // set create time
         group.setCreateTime(new Date());

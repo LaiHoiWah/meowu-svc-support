@@ -1,6 +1,7 @@
 package com.meowu.svc.support.core.dictionary.manager;
 
 import com.meowu.starter.commons.utils.AssertionUtils;
+import com.meowu.starter.mybatis.security.exception.DuplicateException;
 import com.meowu.starter.web.security.stereotype.Manager;
 import com.meowu.svc.support.core.dictionary.dao.GroupDao;
 import com.meowu.svc.support.core.dictionary.entity.Group;
@@ -20,7 +21,7 @@ public class GroupManager{
 
         // exist group code
         if(groupDao.existsByCode(group.getCode())){
-            throw new IllegalArgumentException("Group code [" + group.getCode() + "] is exists");
+            throw new DuplicateException("Group code [" + group.getCode() + "] is exists");
         }
 
         return groupDao.save(group);

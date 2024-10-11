@@ -22,7 +22,7 @@ public class GroupRestController{
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response<Group> getById(@PathVariable(value = "id") Long id){
+    public Response<Group> getById(@PathVariable("id") Long id){
         return new Response<Group>(groupService.getById(id));
     }
 
