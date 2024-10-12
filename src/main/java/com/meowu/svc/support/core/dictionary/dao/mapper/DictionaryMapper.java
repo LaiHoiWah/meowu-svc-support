@@ -13,8 +13,8 @@ public interface DictionaryMapper{
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert("""
-                INSERT INTO st_dictionary (group_id, code, display, description, create_time)
-                     VALUES (#{groupId}, #{code}, #{display}, #{description}, #{createTime})
+            INSERT INTO st_dictionary (group_id, code, display, description, create_time)
+                 VALUES (#{groupId}, #{code}, #{display}, #{description}, #{createTime})
             """)
     void save(Dictionary dictionary);
 
@@ -43,4 +43,8 @@ public interface DictionaryMapper{
     })
     @SelectProvider(type = Provider.class, method = "find")
     List<Dictionary> find(Criteria criteria);
+
+    @ResultType(value = Long.class)
+    @SelectProvider(type = Provider.class, method = "find")
+    Long count(Criteria criteria);
 }

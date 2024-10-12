@@ -14,6 +14,7 @@ CREATE TABLE `st_dictionary` (
     `code`        VARCHAR(50) NOT NULL,
     `display`     VARCHAR(50) NOT NULL,
     `description` VARCHAR(50) NOT NULL,
+    `rank`        INT         DEFAULT NULL,
     `create_time` TIMESTAMP   NOT NULL,
     `update_time` TIMESTAMP   DEFAULT NULL,
     `delete_time` TIMESTAMP   DEFAULT NULL,

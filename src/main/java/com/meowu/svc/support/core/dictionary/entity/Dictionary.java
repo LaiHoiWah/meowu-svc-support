@@ -20,6 +20,7 @@ public class Dictionary implements Identity<Long>, Create, Update, Delete{
     private String code;
     private String display;
     private String description;
+    private Integer rank;
     private Date createTime;
     private Date updateTime;
     private Date deleteTime;

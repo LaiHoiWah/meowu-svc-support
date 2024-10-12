@@ -56,12 +56,14 @@ public class DictionaryDao{
         // condition
         Criteria criteria = new Criteria();
         criteria.from(Dictionary.class);
+        criteria.select(Restrictions.count("id"));
         criteria.where(
             Restrictions.equal("groupId", groupId),
             Restrictions.equal("code", code)
         );
 
-        Long total = 0L;
+        // result
+        Long total = dictionaryMapper.count(criteria);
         return (total != null && total > 0);
     }
 }

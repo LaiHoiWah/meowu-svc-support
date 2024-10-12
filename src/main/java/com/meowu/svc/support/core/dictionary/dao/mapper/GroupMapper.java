@@ -13,8 +13,8 @@ public interface GroupMapper{
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert("""
-                INSERT INTO st_group (code, description, create_time)
-                     VALUES (#{code}, #{description}, #{createTime})
+            INSERT INTO st_group (code, description, create_time)
+                 VALUES (#{code}, #{description}, #{createTime})
             """)
     void save(Group group);
 
@@ -40,6 +40,7 @@ public interface GroupMapper{
     @SelectProvider(type = Provider.class, method = "find")
     List<Group> find(Criteria criteria);
 
+    @ResultType(value = Long.class)
     @SelectProvider(type = Provider.class, method = "find")
     Long count(Criteria criteria);
 }

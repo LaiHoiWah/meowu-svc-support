@@ -21,6 +21,8 @@ public class DictionaryManager{
         AssertionUtils.notBlank(dictionary.getCode(), "Dictionary code must not be null");
 
         // exist
+
+
         if(dictionaryDao.existsByGroupIdAndCode(dictionary.getGroupId(), dictionary.getCode())){
             throw new DuplicateException("Dictionary code [" + dictionary.getCode() + "] is exists");
         }

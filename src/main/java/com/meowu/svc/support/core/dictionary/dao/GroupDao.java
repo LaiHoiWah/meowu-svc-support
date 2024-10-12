@@ -48,12 +48,12 @@ public class GroupDao{
 
         // condition
         Criteria criteria = new Criteria();
-//        criteria.selects(Restrictions.count());
-//        criteria.where(Restrictions.equal("code", code));
+        criteria.from(Group.class);
+        criteria.select(Restrictions.count("id"));
+        criteria.where(Restrictions.equal("code", code));
 
         // result
-//        Long total = groupMapper.count(criteria);
-        Long total = 0L;
+        Long total = groupMapper.count(criteria);
         return (total != null && total > 0);
     }
 }
