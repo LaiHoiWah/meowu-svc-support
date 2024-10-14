@@ -1,9 +1,11 @@
 package com.meowu.svc.support.core.dictionary.manager;
 
+import com.meowu.starter.commons.security.exception.DuplicateException;
+import com.meowu.starter.commons.security.exception.NotFoundException;
 import com.meowu.starter.commons.utils.AssertionUtils;
-import com.meowu.starter.mybatis.security.exception.DuplicateException;
 import com.meowu.starter.web.security.stereotype.Manager;
 import com.meowu.svc.support.core.dictionary.dao.DictionaryDao;
+import com.meowu.svc.support.core.dictionary.dao.GroupDao;
 import com.meowu.svc.support.core.dictionary.entity.Dictionary;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,14 +17,18 @@ public class DictionaryManager{
     @Autowired
     private DictionaryDao dictionaryDao;
 
+    @Autowired
+    private GroupDao groupDao;
+
     public Dictionary save(Dictionary dictionary){
         AssertionUtils.notNull(dictionary, "Dictionary entity must not be null");
         AssertionUtils.notNull(dictionary.getGroupId(), "Dictionary group id must not be null");
         AssertionUtils.notBlank(dictionary.getCode(), "Dictionary code must not be null");
 
-        // exist
-
-
+        // verify
+        if(groupDao.existsById(dictionary.getGroupId())){
+            throw new NotFoundException("Group id [" + dictionary.getGroupId() + "] is not exists");
+        }
         if(dictionaryDao.existsByGroupIdAndCode(dictionary.getGroupId(), dictionary.getCode())){
             throw new DuplicateException("Dictionary code [" + dictionary.getCode() + "] is exists");
         }
