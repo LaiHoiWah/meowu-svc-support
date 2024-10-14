@@ -2,11 +2,11 @@ package com.meowu.svc.support.core.dictionary.dao;
 
 import com.meowu.starter.commons.utils.AssertionUtils;
 import com.meowu.starter.mybatis.criteria.Criteria;
+import com.meowu.starter.mybatis.criteria.expression.Order;
 import com.meowu.starter.mybatis.mysql.restrictions.Restrictions;
 import com.meowu.starter.mybatis.security.exception.DataAccessException;
 import com.meowu.svc.support.core.dictionary.dao.mapper.DictionaryMapper;
 import com.meowu.svc.support.core.dictionary.entity.Dictionary;
-import com.meowu.svc.support.core.dictionary.entity.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +21,7 @@ public class DictionaryDao{
 
     public Dictionary save(Dictionary dictionary){
         AssertionUtils.notNull(dictionary, "Dictionary entity must not be null");
-        AssertionUtils.notNull(dictionary.getGroupId(), "Dictionary group id must not be null");
+        AssertionUtils.notBlank(dictionary.getGroupCode(), "Dictionary group code must not be null");
         AssertionUtils.notBlank(dictionary.getCode(), "Dictionary code must not be null");
 
         try{
@@ -48,22 +48,38 @@ public class DictionaryDao{
         }
     }
 
-    public List<Dictionary> findByGroupId(Long groupId){
-        AssertionUtils.notNull(groupId, "Dictionary group id must not be null");
+    public List<Dictionary> findByGroupCode(String groupCode){
+        AssertionUtils.notBlank(groupCode, "Dictionary group code must not be null");
 
         try{
             // condition
             Criteria criteria = new Criteria();
             criteria.from(Dictionary.class);
-            criteria.where(Restrictions.equal("groupId", groupId));
+            criteria.where(Restrictions.equal("groupCode", groupCode));
+            criteria.sort(Restrictions.asc("rank"));
             return dictionaryMapper.find(criteria);
         }catch(Exception e){
             throw new DataAccessException(e.getMessage(), e);
         }
     }
 
-    public boolean existsByGroupIdAndCode(Long groupId, String code){
-        AssertionUtils.notNull(groupId, "Dictionary group id must not be null");
+    public List<Dictionary> findByGroupCodes(List<String> groupCodes){
+        AssertionUtils.notEmpty(groupCodes, "Dictionary group code list must not be null");
+
+        try{
+            // condition
+            Criteria criteria = new Criteria();
+            criteria.from(Dictionary.class);
+            criteria.where(Restrictions.in("groupCode", groupCodes));
+            criteria.sort(Restrictions.asc("rank"));
+            return dictionaryMapper.find(criteria);
+        }catch(Exception e){
+            throw new DataAccessException(e.getMessage(), e);
+        }
+    }
+
+    public boolean existsByGroupCodeAndCode(String groupCode, String code){
+        AssertionUtils.notBlank(groupCode, "Dictionary group code must not be null");
         AssertionUtils.notBlank(code, "Dictionary code must not be null");
 
         try{
@@ -72,7 +88,7 @@ public class DictionaryDao{
             criteria.from(Dictionary.class);
             criteria.select(Restrictions.count("id"));
             criteria.where(
-                Restrictions.equal("groupId", groupId),
+                Restrictions.equal("groupCode", groupCode),
                 Restrictions.equal("code", code)
             );
 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @Service
@@ -28,7 +30,15 @@ public class DictionaryServiceImpl implements DictionaryService{
     }
 
     @Override
-    public List<Dictionary> findByGroupId(Long groupId){
-        return dictionaryManager.findByGroupId(groupId);
+    public List<Dictionary> findByGroupCode(String groupCode){
+        return dictionaryManager.findByGroupCode(groupCode);
+    }
+
+    @Override
+    public Map<String, List<Dictionary>> findByGroupCodes(List<String> groupCode){
+        List<Dictionary> dictionaries = dictionaryManager.findByGroupCodes(groupCode);
+
+        return dictionaries.stream()
+                           .collect(Collectors.groupingBy(Dictionary::getGroupCode));
     }
 }

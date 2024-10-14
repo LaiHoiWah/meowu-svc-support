@@ -3,6 +3,7 @@ package com.meowu.svc.support.core.dictionary.service;
 import com.meowu.svc.support.core.dictionary.entity.Dictionary;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DictionaryService{
 
@@ -10,5 +11,7 @@ public interface DictionaryService{
 
     Dictionary getById(Long id);
 
-    List<Dictionary> findByGroupId(Long groupId);
+    List<Dictionary> findByGroupCode(String groupCode);
+
+    Map<String, List<Dictionary>> findByGroupCodes(List<String> groupCode);
 }

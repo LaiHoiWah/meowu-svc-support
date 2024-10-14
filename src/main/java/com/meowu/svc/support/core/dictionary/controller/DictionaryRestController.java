@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/dictionary")
@@ -26,8 +27,13 @@ public class DictionaryRestController{
         return new Response<Dictionary>(dictionaryService.getById(id));
     }
 
-    @GetMapping(value = "/group/{groupId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response<List<Dictionary>> findByGroupId(@PathVariable("groupId") Long groupId){
-        return new Response<List<Dictionary>>(dictionaryService.findByGroupId(groupId));
+    @GetMapping(value = "/group/{groupCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response<List<Dictionary>> findByGroupCode(@PathVariable("groupCode") String groupCode){
+        return new Response<List<Dictionary>>(dictionaryService.findByGroupCode(groupCode));
+    }
+
+    @GetMapping(value = "/groups", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Response<Map<String, List<Dictionary>>> findByGroupCodes(@RequestParam("groupCodes") List<String> groupCodes){
+        return new Response<Map<String, List<Dictionary>>>(dictionaryService.findByGroupCodes(groupCodes));
     }
 }

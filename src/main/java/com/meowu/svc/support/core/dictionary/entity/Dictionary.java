@@ -17,7 +17,7 @@ import java.util.Date;
 public class Dictionary implements Identity<Long>, Create, Update, Delete{
 
     private Long id;
-    private Long groupId;
+    private String groupCode;
     private String code;
     private String display;
     private String description;
