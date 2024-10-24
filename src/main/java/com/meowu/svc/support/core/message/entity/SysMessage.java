@@ -16,6 +16,7 @@ public class SysMessage implements Identity<Long>, Create, Update, Delete{
 
     private Long id;
     private String code;
+    private String title;
     private String content;
     private RecordStatus status;
     private Date createTime;
