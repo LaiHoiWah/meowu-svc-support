@@ -15,8 +15,21 @@ public interface DictionaryMapper{
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert(
         """
-        INSERT INTO st_dictionary (group_code, code, display, description, status, create_time)
-             VALUES (#{groupCode}, #{code}, #{display}, #{description}, #{status}, #{createTime})
+        INSERT INTO st_dictionary (
+            group_code,
+            code,
+            display,
+            description,
+            status,
+            create_time
+        ) VALUES (
+            #{groupCode, jdbcType=VARCHAR},
+            #{code, jdbcType=VARCHAR},
+            #{display, jdbcType=VARCHAR},
+            #{description, jdbcType=VARCHAR},
+            #{status, typeHandler=com.meowu.svc.support.commons.mybatis.handler.RecordStatusHandler},
+            #{createTime, jdbcType=TIMESTAMP}
+        )
         """
     )
     void save(Dictionary dictionary);

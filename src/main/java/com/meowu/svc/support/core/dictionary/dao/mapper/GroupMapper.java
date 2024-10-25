@@ -15,8 +15,17 @@ public interface GroupMapper{
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     @Insert(
         """
-        INSERT INTO st_group (code, description, status, create_time)
-             VALUES (#{code}, #{description}, #{status}, #{createTime})
+        INSERT INTO st_group (
+            code,
+            description,
+            status,
+            create_time
+        ) VALUES (
+            #{code, jdbcType=VARCHAR},
+            #{description, jdbcType=VARCHAR},
+            #{status, typeHandler=com.meowu.svc.support.commons.mybatis.handler.RecordStatusHandler},
+            #{createTime, jdbcType=TIMESTAMP}
+        )
         """
     )
     void save(Group group);

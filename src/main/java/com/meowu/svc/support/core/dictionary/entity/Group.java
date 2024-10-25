@@ -18,7 +18,6 @@ public class Group implements Identity<Long>, Create, Update, Delete{
 
     private Long id;
     private String code;
-    private String display;
     private String description;
     private RecordStatus status;
     private Date createTime;
