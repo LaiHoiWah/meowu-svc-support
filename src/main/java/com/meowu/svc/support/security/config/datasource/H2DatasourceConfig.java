@@ -1,4 +1,4 @@
-package com.meowu.svc.support.config.datasource;
+package com.meowu.svc.support.security.config.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

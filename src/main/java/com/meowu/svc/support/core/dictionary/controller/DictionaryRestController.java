@@ -1,6 +1,6 @@
 package com.meowu.svc.support.core.dictionary.controller;
 
-import com.meowu.starter.commons.security.domain.Response;
+import com.meowu.starter.commons.security.response.Response;
 import com.meowu.svc.support.core.dictionary.entity.Dictionary;
 import com.meowu.svc.support.core.dictionary.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;

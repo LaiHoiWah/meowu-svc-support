@@ -1,6 +1,8 @@
 package com.meowu.svc.support.core.dictionary.dao;
 
+import com.meowu.starter.commons.security.constants.RecordStatus;
 import com.meowu.starter.commons.utils.AssertionUtils;
+import com.meowu.starter.commons.utils.StringUtils;
 import com.meowu.starter.mybatis.criteria.Criteria;
 import com.meowu.starter.mybatis.mysql.restrictions.Restrictions;
 import com.meowu.starter.mybatis.security.exception.DataAccessException;
@@ -46,10 +48,18 @@ public class GroupDao{
         }
     }
 
-    public List<Group> find(){
+    public List<Group> find(String keyword, RecordStatus status){
         try{
             Criteria criteria = new Criteria();
             criteria.from(Group.class);
+
+            // condition
+            if(StringUtils.isNotBlank(keyword)){
+                criteria.where(Restrictions.like("code", StringUtils.strip(keyword)));
+            }
+            if(status != null){
+                criteria.where(Restrictions.equal("status", status.getCode()));
+            }
             return groupMapper.find(criteria);
         }catch(Exception e){
             throw new DataAccessException(e.getMessage(), e);

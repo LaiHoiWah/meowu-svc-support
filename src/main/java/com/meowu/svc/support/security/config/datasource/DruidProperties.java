@@ -1,4 +1,4 @@
-package com.meowu.svc.support.config.datasource;
+package com.meowu.svc.support.security.config.datasource;
 
 import lombok.Getter;
 import lombok.Setter;

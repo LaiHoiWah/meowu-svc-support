@@ -9,12 +9,6 @@ mybatis:
     mp-underscore-to-camel-case: 'true'
     log-impl: 'org.apache.ibatis.logging.stdout.StdOutImpl'
 
-# meowu
-meowu:
-  web:
-    cors: 'true'
-    converter: 'gson'
-
 # logging
 logging:
   config: 'classpath:logback-spring.xml'
