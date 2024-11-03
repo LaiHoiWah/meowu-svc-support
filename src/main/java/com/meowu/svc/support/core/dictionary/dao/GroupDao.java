@@ -2,6 +2,7 @@ package com.meowu.svc.support.core.dictionary.dao;
 
 import com.meowu.starter.commons.security.constants.RecordStatus;
 import com.meowu.starter.commons.utils.AssertionUtils;
+import com.meowu.starter.commons.utils.CollectionUtils;
 import com.meowu.starter.commons.utils.StringUtils;
 import com.meowu.starter.mybatis.criteria.Criteria;
 import com.meowu.starter.mybatis.mysql.restrictions.Restrictions;
@@ -48,17 +49,24 @@ public class GroupDao{
         }
     }
 
-    public List<Group> find(String keyword, RecordStatus status){
+    public List<Group> find(String keyword, List<String> code, List<RecordStatus> status){
         try{
             Criteria criteria = new Criteria();
             criteria.from(Group.class);
 
             // condition
             if(StringUtils.isNotBlank(keyword)){
-                criteria.where(Restrictions.like("code", StringUtils.strip(keyword)));
+                criteria.where(Restrictions.or(
+                    Restrictions.like("code", keyword),
+                    Restrictions.like("description", keyword)
+                ));
             }
-            if(status != null){
-                criteria.where(Restrictions.equal("status", status.getCode()));
+            if(CollectionUtils.isNotEmpty(code)){
+                criteria.where(Restrictions.in("code", code));
+            }
+            if(CollectionUtils.isNotEmpty(status)){
+                List<String> statusList = status.stream().map(RecordStatus::getCode).toList();
+                criteria.where(Restrictions.in("status", statusList));
             }
             return groupMapper.find(criteria);
         }catch(Exception e){
@@ -75,24 +83,6 @@ public class GroupDao{
             criteria.from(Group.class);
             criteria.select(Restrictions.count("id"));
             criteria.where(Restrictions.equal("code", code));
-
-            // result
-            Long total = groupMapper.count(criteria);
-            return (total != null && total > 0);
-        }catch(Exception e){
-            throw new DataAccessException(e.getMessage(), e);
-        }
-    }
-
-    public boolean existsById(Long id){
-        AssertionUtils.notNull(id, "Group id must not be null");
-
-        try{
-            // condition
-            Criteria criteria = new Criteria();
-            criteria.from(Group.class);
-            criteria.select(Restrictions.count("id"));
-            criteria.where(Restrictions.equal("id", id));
 
             // result
             Long total = groupMapper.count(criteria);

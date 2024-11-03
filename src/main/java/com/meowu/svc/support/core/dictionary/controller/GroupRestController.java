@@ -1,5 +1,6 @@
 package com.meowu.svc.support.core.dictionary.controller;
 
+import com.meowu.starter.commons.security.constants.RecordStatus;
 import com.meowu.starter.commons.security.response.Response;
 import com.meowu.svc.support.core.dictionary.entity.Group;
 import com.meowu.svc.support.core.dictionary.service.GroupService;
@@ -27,7 +28,9 @@ public class GroupRestController{
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Response<List<Group>> find(){
-        return new Response<List<Group>>(groupService.find());
+    public Response<List<Group>> find(@RequestParam(value = "keyword", required = false) String keyword,
+                                      @RequestParam(value = "code", required = false) List<String> code,
+                                      @RequestParam(value = "status", required = false) List<RecordStatus> status){
+        return new Response<List<Group>>(groupService.find(keyword, code, status));
     }
 }

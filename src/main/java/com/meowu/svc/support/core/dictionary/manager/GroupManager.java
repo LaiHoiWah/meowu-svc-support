@@ -1,7 +1,10 @@
 package com.meowu.svc.support.core.dictionary.manager;
 
+import com.meowu.starter.commons.security.constants.RecordStatus;
 import com.meowu.starter.commons.security.exception.DuplicateException;
 import com.meowu.starter.commons.utils.AssertionUtils;
+import com.meowu.starter.commons.utils.CollectionUtils;
+import com.meowu.starter.commons.utils.StringUtils;
 import com.meowu.starter.web.security.stereotype.Manager;
 import com.meowu.svc.support.core.dictionary.dao.GroupDao;
 import com.meowu.svc.support.core.dictionary.entity.Group;
@@ -33,7 +36,7 @@ public class GroupManager{
         return groupDao.getById(id);
     }
 
-    public List<Group> find(){
-        return groupDao.find();
+    public List<Group> find(String keyword, List<String> code, List<RecordStatus> status){
+        return groupDao.find(keyword, code, status);
     }
 }

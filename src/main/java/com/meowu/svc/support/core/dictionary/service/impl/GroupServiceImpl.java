@@ -1,5 +1,9 @@
 package com.meowu.svc.support.core.dictionary.service.impl;
 
+import com.meowu.starter.commons.security.constants.RecordStatus;
+import com.meowu.starter.commons.utils.CollectionUtils;
+import com.meowu.starter.commons.utils.ObjectUtils;
+import com.meowu.starter.commons.utils.StringUtils;
 import com.meowu.svc.support.core.dictionary.entity.Group;
 import com.meowu.svc.support.core.dictionary.manager.GroupManager;
 import com.meowu.svc.support.core.dictionary.service.GroupService;
@@ -28,7 +32,26 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
-    public List<Group> find(){
-        return groupManager.find();
+    public List<Group> find(String keyword, List<String> code, List<RecordStatus> status){
+        String             strip      = null;
+        List<String>       codeList   = null;
+        List<RecordStatus> statusList = null;
+
+        if(keyword != null){
+            strip = StringUtils.strip(keyword);
+        }
+        if(CollectionUtils.isNotEmpty(code)){
+            codeList = code.stream()
+                           .filter(StringUtils::isNotBlank)
+                           .map(StringUtils::strip)
+                           .toList();
+        }
+        if(CollectionUtils.isNotEmpty(status)){
+            statusList = status.stream()
+                               .filter(ObjectUtils::isNotNull)
+                               .toList();
+        }
+
+        return groupManager.find(strip, codeList, statusList);
     }
 }
